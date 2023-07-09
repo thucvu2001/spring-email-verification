@@ -14,4 +14,6 @@ public interface IUserService {
     Optional<User> findByEmail(String email);
 
     void saveUserVerificationToken(String token, User curUser);
+
+    String validateToken(String curToken);
 }

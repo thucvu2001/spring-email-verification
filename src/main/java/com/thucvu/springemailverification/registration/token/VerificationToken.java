@@ -10,7 +10,6 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
 public class VerificationToken {
 
