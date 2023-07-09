@@ -1,4 +1,4 @@
-package com.thucvu.springemailverification.registration;
+package com.thucvu.springemailverification.registration.model;
 
 public record RegistrationRequest(
         String firstName,

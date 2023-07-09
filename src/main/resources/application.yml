@@ -1,1 +1,13 @@
+server:
+  port: 9191
 
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/registration_db
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
