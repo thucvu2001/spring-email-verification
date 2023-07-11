@@ -22,19 +22,26 @@ import java.util.UUID;
 public class RegistrationCompleteEventListener implements ApplicationListener<RegistrationCompleteEvent> {
 
     private final UserService userService;
+
     private final JavaMailSender mailSender;
     private User theUser;
+
     @Override
     public void onApplicationEvent(RegistrationCompleteEvent event) {
         // 1. Get the newly registered user: lấy người dùng mới đăng ký
-        User curUser = event.getUser();
+        theUser = event.getUser();
         // 2. Create a verification token for the user: tạo 1 token xác minh cho người dùng
         String verificationToken = UUID.randomUUID().toString();
         // 3. Save the verification token for the user: lưu token của user đó vào database
-        userService.saveUserVerificationToken(verificationToken, curUser);
+        userService.saveUserVerificationToken(verificationToken, theUser);
         // 4. Build the verification url to be sent to the user: tạo url để gửi cho user
         String url = event.getApplicationUrl() + "/register/verifyEmail?token=" + verificationToken;
         // 5. Send the email: gửi mail
+        try {
+            sendVerificationEmail(url);
+        } catch (MessagingException | UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
         log.info("Click the link to verify your registration: {}", url);
     }
 
@@ -42,7 +49,7 @@ public class RegistrationCompleteEventListener implements ApplicationListener<Re
         String subject = "Email Verification";
         String senderName = "User Registration Portal Service";
         String mailContent = "<p> Hi, " + theUser.getFirstName() + ", </p>" +
-                "<p>Thank you for registering with us," + "" +
+                "<p>Thank you for registering with us," +
                 "Please, follow the link below to complete your registration.</p>" +
                 "<a href=\"" + url + "\">Verify your email to activate your account</a>" +
                 "<p> Thank you <br> Users Registration Portal Service";
