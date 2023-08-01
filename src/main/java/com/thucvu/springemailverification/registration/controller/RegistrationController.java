@@ -12,8 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.MessageFormat;
-
 @RestController
 @RequestMapping("/register")
 @RequiredArgsConstructor

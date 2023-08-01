@@ -65,7 +65,7 @@ public class UserService implements IUserService {
         Calendar calendar = Calendar.getInstance();
         if (token.getExpirationTime().getTime() - calendar.getTime().getTime() <= 0) {
             tokenRepository.delete(token);
-            return "Token already expired (Token het han";
+            return "Token already expired (Token het han)";
         }
         user.setEnable(true);
         userRepository.save(user);
